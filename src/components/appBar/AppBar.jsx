@@ -123,12 +123,12 @@ export default function PrimarySearchAppBar() {
       <MenuItem >
 
         <Link href="/login" variant="body2">
-          Inicias Sesión
+          Iniciar Sesión
         </Link>
       </MenuItem>
       <MenuItem >
         <Link href="/logup" variant="body2">
-          Registrar usuario
+          Registrar Usuario
         </Link>
       </MenuItem>
     </Menu>

@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -61,7 +59,6 @@ export default function SignUp() {
 
     const handleChange = ({ target }) => {
         setState({ ...state, [target.name]: target.value });
-        console.log(state);
     };
 
     function onSubmit(e) {
@@ -72,8 +69,8 @@ export default function SignUp() {
         UserAPI.LogUp(state.firstName, state.lastName, state.userName, state.email, state.password)
             .then(res => {
                console.log(res) 
-               if(res.status===200){
-                   alert("Usuario ingresado correctamente");
+               if(res.status===201){
+                   alert("Usuario creado correctamente");
                }else{
                    alert("No se ha podido crear el usuario");
                }
@@ -167,10 +164,7 @@ export default function SignUp() {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            {/**               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />*/}
+
                         </Grid>
                     </Grid>
                     <Button

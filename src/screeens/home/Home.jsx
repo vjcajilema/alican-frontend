@@ -1,13 +1,11 @@
 import React from 'react';
 //import './Home.css';
 import { Grid, makeStyles, Box, Button, withWidth } from "@material-ui/core";
-
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import Contenedor from '../../components/container/Container.jsx';
+import ImageSlider from '../../components/imageSlider/Slider.jsx';
+import ProductsSlider from '../../components/productSlider/Slider.jsx';
 import NavBar from '../../components/appBar/AppBar.jsx';
 import Trends from '../../components/trends/Trends.jsx';
+import Logo from '../../images/Logotipo.png'
 
 const estilos = makeStyles((theme) => ({
     fondo: {
@@ -29,7 +27,12 @@ const estilos = makeStyles((theme) => ({
         paddingRight: '2%',
         justifySelf: "center",
         alignSelf: "center",
+
     },
+    logo: {
+      maxHeight:'80px',
+    },
+
 }));
 
 const Home = (props) => {
@@ -43,14 +46,14 @@ const Home = (props) => {
         <div>
             <Grid container className={classes.fondo}>
 
-                <Grid item xs={12} md={12} lg={3} justify="center">
+                <Grid item xs={12} md={12} lg={12} justify="center">
                     <Box
                         bgcolor="classes.fondo"
                         color="primary.contrastText"
                         minHeight="100vh"
                         textAlign="center"
                     >
-                        <Grid item xs={12} md={12} lg={3} direction="column" justify="center">
+                        <Grid item xs={12} md={12} lg={12} direction="column" justify="center">
                             <Box
                                 bgcolor="classes.fondo"
                                 color="primary.contrastText"
@@ -58,7 +61,8 @@ const Home = (props) => {
                                 maxHeight="100px"
                                 textAlign="center"
                             >
-                                Alican
+                                <img className={classes.logo} src={Logo}>
+                                </img>
 
                             </Box>
                             <NavBar>
@@ -71,12 +75,30 @@ const Home = (props) => {
                             <Box
                                 bgcolor="classes.fondo"
                                 color="black"
-                                minHeight="75vh"
+                                minHeight="100vh"
                                 height="75vh"
-
+                                width='100%'
                                 textAlign="left"
 
                             >
+                                {/*<Box
+                                    bgcolor="red"
+                                    color="black"
+                                    maxHeight="75vh"
+                                    height="75vh"
+                                    width='100%'
+                                    textAlign="left"
+                                    display='flex'
+                                    justifyContent='center'
+                                >
+                                    <ImageSlider>   
+
+                                    </ImageSlider>
+
+                                </Box>*/}
+
+
+
                                 Puede que también te interese eso
                                 <hr></hr>
                                 <Box
@@ -86,7 +108,11 @@ const Home = (props) => {
                                     height="35vh"
                                     textAlign="left"
 
-                                ></Box>
+                                >
+                                    <ProductsSlider>
+                                        
+                                    </ProductsSlider>
+                                </Box>
 
                                 Productos populares
                                 <hr></hr>
