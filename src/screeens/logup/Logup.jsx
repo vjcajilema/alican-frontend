@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {UseFriendStatus} from '../../components/customHooks/User'
 //Apis
 import UserAPI from '../../api/UserApi'
 function Copyright() {
@@ -67,13 +68,14 @@ export default function SignUp() {
     function onSubmit(e) {
         e.preventDefault();
         //llamado a la api de regisrar usuario
-
+        
         //  LogUp:  (firstName, lastName, userName, email, password) => new Promise(
         UserAPI.LogUp(state.firstName, state.lastName, state.userName, state.email, state.password)
             .then(res => {
                console.log(res) 
-               if(res.status===200){
-                   alert("Usuario ingresado correctamente");
+               if(res.status===201){
+                   
+                   alert(res.data.message);
                }else{
                    alert("No se ha podido crear el usuario");
                }
@@ -81,6 +83,8 @@ export default function SignUp() {
                 console.log(err)
                 if(!err.response){
                     alert('No se ha podido esablecer conexión con el servidor');
+                }else{
+                    alert("No se ha podido crear el usuario");
                 }
                 //console.log(err.response)
 
