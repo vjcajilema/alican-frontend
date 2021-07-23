@@ -7,6 +7,7 @@ import API from './Environment/config';
 const ENDPOINTS = {
   logup: "/usuario/usuario/",
   login: "/",
+  activate: "/usuario/activate/",
 
 }
 /*
@@ -64,7 +65,25 @@ const UserApi = {
         )
     }
   ),
+  Activate: (coderegister) => new Promise(
+    (resolve, reject) => {
+      API.put(ENDPOINTS.activate,
+        JSON.stringify({
+          'coderegister': coderegister,
+        })
+      )
+        .then(
+          res => res
+        )
+        .then(
+          data => resolve(data)
+        )
+        .catch(
+          err => reject(err),
 
+        )
+    }
+  ),
 }
 
 export default UserApi;

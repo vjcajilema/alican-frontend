@@ -15,7 +15,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Link from '@material-ui/core/Link';
-
+import FavoriteIcon from '@material-ui/icons/Favorite';
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -109,6 +109,10 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  /*const LogOut = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };*/
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -121,15 +125,29 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem >
+        {window.localStorage.getItem('userToken') ? (
+          <Link href="/login" variant="body2">
+            Nombre De Usuario
+          </Link>
+        ) : (
+          <Link href="/login" variant="body2">
+            Iniciar Sesión
+          </Link>
+        )}
 
-        <Link href="/login" variant="body2">
-          Iniciar Sesión
-        </Link>
+
       </MenuItem>
       <MenuItem >
-        <Link href="/logup" variant="body2">
-          Registrar Usuario
-        </Link>
+        {window.localStorage.getItem('userToken') ? (
+          <div  >
+            Cerrar Sesión
+          </div>
+        ) : (
+          <Link href="/logup" variant="body2">
+            Registrar Usuario
+          </Link>
+        )}
+
       </MenuItem>
     </Menu>
   );
@@ -208,11 +226,11 @@ export default function PrimarySearchAppBar() {
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
-                <MailIcon />
+                <FavoriteIcon />
               </Badge>
             </IconButton>
             <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
+              <Badge badgeContent={1} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>

@@ -74,6 +74,8 @@ export default function SignInSide() {
                if(res.status===201){
                    alert(res.data.message);
                    window.localStorage.setItem('userToken', res.data.token);
+                   <Link href="/home"/>
+          
                }else{
                 alert("No se ha podido iniciar sesión");
                }
