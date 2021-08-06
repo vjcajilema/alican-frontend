@@ -34,7 +34,7 @@ const Trends = () => {
 
             <div className={classes.grow}>
             <Box color="primary" >
-                Tendencias  
+                 
 
             </Box>
             </div>

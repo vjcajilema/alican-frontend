@@ -8,6 +8,8 @@ import {
     CarouselCaption
 } from 'reactstrap';
 import Product from './Product'
+//valores para pruebas
+import ImgApple12 from '../../images/develop/apple12idealo.png'
 const useStyles = makeStyles((theme) => ({
 
     header: {
@@ -16,6 +18,12 @@ const useStyles = makeStyles((theme) => ({
     },
     navbar: {
         background: '#375f86',
+
+    },
+    slider: {
+        height: '100%',
+        background: 'yellow',
+
 
     },
 }));
@@ -29,7 +37,7 @@ const Slider = (props) => {
     const classes = useStyles();
 
     const [state, setState] = React.useState({
-        products: null,
+        products: [1, 2, 3, 4],
         activeIndex: 0,
         animating: false,
 
@@ -51,26 +59,34 @@ const Slider = (props) => {
     }
     const slides = items.map((item) => {
         return (
-          <CarouselItem
-            onExiting={() => setAnimating(true)}
-            onExited={() => setAnimating(false)}
-            key={item.src}
-          >
-            <img className={classes.grow} src={item.src} alt={item.altText} />
-            <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
-          </CarouselItem>
-        );
-      });
+            <CarouselItem
+                onExiting={() => setAnimating(true)}
+                onExited={() => setAnimating(false)}
+                key={item.src}
+            >
+                <img className={classes.grow} src={item.src} alt={item.altText} />
 
-    
+                <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
+            </CarouselItem>
+        );
+    });
+
+
     return (
         <Carousel
             activeIndex={activeIndex}
             next={next}
             previous={previous}
         >
-            <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
-            {slides}
+            <CarouselIndicators className='row' items={items} activeIndex={activeIndex} onClickHandler={goToIndex} direction="row" />
+            
+                {state.products.map((product, index) => (
+                    <Product key={index} image={ImgApple12} price={800.00} name={"Apple 12"} description={"celular de marca apple"}>
+
+                    </Product>
+                ))}
+            
+
             <CarouselControl color="black" direction="prev" directionText="Previous" onClickHandler={previous} />
             <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
         </Carousel>

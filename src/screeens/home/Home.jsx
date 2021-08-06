@@ -6,7 +6,7 @@ import ProductsSlider from '../../components/productSlider/Slider.jsx';
 import NavBar from '../../components/appBar/AppBar.jsx';
 import Trends from '../../components/trends/Trends.jsx';
 import Logo from '../../images/Logotipo.png'
-
+import ProductContainer from '../../components/productSlider/ProductContainer'
 const estilos = makeStyles((theme) => ({
     fondo: {
         background: '#0a3761',
@@ -78,6 +78,7 @@ const Home = (props) => {
                                 minHeight="100vh"
                                 height="75vh"
                                 width='100%'
+                                
                                 textAlign="left"
 
                             >
@@ -99,32 +100,26 @@ const Home = (props) => {
 
 
 
-                                Puede que también te interese eso
+                                Productos nuevos
                                 <hr></hr>
                                 <Box
-                                    bgcolor="classes.fondo"
+                                    bgcolor="white"
                                     color="black"
                                     minHeight="35vh"
                                     height="35vh"
                                     textAlign="left"
 
                                 >
-                                    <ProductsSlider>
+                                    <ProductContainer>
+
+                                    </ProductContainer>
+                                    <ProductContainer>
+
+                                    </ProductContainer>
                                         
-                                    </ProductsSlider>
                                 </Box>
 
-                                Productos populares
-                                <hr></hr>
-                                <Box
-                                    bgcolor="classes.fondo"
-                                    color="black"
-                                    minHeight="35vh"
-                                    height="35vh"
-
-                                    textAlign="left"
-
-                                ></Box>
+                                
                             </Box>
 
                         </Grid>
