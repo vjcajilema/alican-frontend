@@ -7,6 +7,7 @@ import NavBar from '../../components/appBar/AppBar.jsx';
 import Trends from '../../components/trends/Trends.jsx';
 import Logo from '../../images/Logotipo.png'
 import ProductContainer from '../../components/productSlider/ProductContainer'
+import ProductApi from '../../api/ProductApi'
 const estilos = makeStyles((theme) => ({
     fondo: {
         background: '#0a3761',
@@ -38,10 +39,65 @@ const estilos = makeStyles((theme) => ({
 const Home = (props) => {
     const classes = estilos();
     const [state, setState] = React.useState({
-        products: null,
+        products: [],
 
     });
+    
+    React.useEffect(() => {
+        ProductApi.getAll()
+            .then(res => {
+               console.log(res) 
+               if(res.status===200){
+                   let productsApi=res.data;
+                   let products=[];
+                   let product=[];
+                   let indexR=0;
+                   let detalle="";
+                   productsApi.forEach((productApi, index)=>{
+                       indexR=index+1;
+                       detalle="";
+                       productApi['titulo']=productApi['titulo'].replace("['", "");
+                        productApi['titulo']=productApi['titulo'].replace("']", "");
+                        productApi['precio']=productApi['precio'].replace("['", "");
+                        productApi['precio']=productApi['precio'].replace("']", "");
+                        productApi['descripcion']=productApi['descripcion'].replace("['", "");
+                        productApi['descripcion']=productApi['descripcion'].replace("']", "");
+                        productApi['imagen']=productApi['imagen'].replace("['", "");
+                        productApi['imagen']=productApi['imagen'].replace("']", "");
+                        for (let i = 0; i < 130; i++) {
+                            if(productApi.descripcion[i]!="-"&&productApi.descripcion[i]!="="){
+                                detalle=detalle+productApi.descripcion[i];
+                            }
 
+                        }
+                        productApi['detalle']=detalle;
+                        product.push(productApi);
+                       if(indexR%5===0 || productsApi.length===indexR){
+                        products.push(product);
+                        product=[];
+                       }
+                       
+                    });
+                    
+                    console.log(productsApi.length)
+                    console.log(products)
+                    setState({...state, products:products});
+          
+               }else{
+                alert("No se ha podido llamar productos");
+               }
+            }).catch(err => {
+                console.log(err)
+                if(!err.response){
+                    alert('No se ha podido esablecer conexión con el servidor');
+                }else{
+                    alert("No se ha podido iniciar sesión");
+                }
+                //console.log(err.response)
+
+            })
+        
+    }, []);
     return (
         <div>
             <Grid container className={classes.fondo}>
@@ -110,12 +166,13 @@ const Home = (props) => {
                                     textAlign="left"
 
                                 >
-                                    <ProductContainer>
+                                    {state.products.map((product, index)=>(
+                                        <ProductContainer products={product} key={index}>
+                                        </ProductContainer>
+                                    ))
 
-                                    </ProductContainer>
-                                    <ProductContainer>
-
-                                    </ProductContainer>
+                                    }
+                                    
                                         
                                 </Box>
 
