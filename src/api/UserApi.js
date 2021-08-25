@@ -1,24 +1,13 @@
 import React from 'react';
 import API from './Environment/config';
 
-
-
-//import Cookies from 'js-cookie'
 const ENDPOINTS = {
   logup: "/usuario/usuario/",
   login: "/",
   activate: "/usuario/activate/",
 
 }
-/*
-{
-        "name": "victor",
-        "last_name": "root",
-        "username": "victor",
-        "email": "vjcajilema@espe.edu.ec",
-        "password": "pbkdf2_sha256$260000$h0NwTlb3cfjQXGnSfNGTc1$HV6GBqK6tKH2w31ggdIBoB9iiAZtcHX5xpJ6cheeYro="
-    } 
-*/
+
 const UserApi = {
   LogUp: (firstName, lastName, userName, email, password) => new Promise(
     (resolve, reject) => {
