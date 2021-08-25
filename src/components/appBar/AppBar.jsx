@@ -15,7 +15,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Link from '@material-ui/core/Link';
-
+import FavoriteIcon from '@material-ui/icons/Favorite';
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -86,6 +86,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
+  const [state, setState] = React.useState({
+    favorites: 0,
+    anotifications: 0,
+
+  });
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -109,6 +114,10 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  /*const LogOut = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };*/
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -121,19 +130,87 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem >
+        {window.localStorage.getItem('userToken') ? (
+          <Link href="/login" variant="body2">
+            Nombre De Usuario
+          </Link>
+        ) : (
+          <Link href="/login" variant="body2">
+            Iniciar Sesión
+          </Link>
+        )}
 
-        <Link href="/login" variant="body2">
-          Inicias Sesión
-        </Link>
       </MenuItem>
       <MenuItem >
-        <Link href="/logup" variant="body2">
-          Registrar usuario
-        </Link>
+        {window.localStorage.getItem('userToken') ? (
+          <div  >
+            Cerrar Sesión
+          </div>
+        ) : (
+          <Link href="/logup" variant="body2">
+            Registrar Usuario
+          </Link>
+        )}
+
       </MenuItem>
     </Menu>
   );
+  const renderFavorites = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem >
+        {window.localStorage.getItem('userToken') ? (
+          <Link href="/login" variant="body2">
+            Nombre De Usuario
+          </Link>
+        ) : (
+          <Link href="/login" variant="body2">
+            Iniciar Sesión
+          </Link>
+        )}
 
+      </MenuItem>
+      <MenuItem >
+        {window.localStorage.getItem('userToken') ? (
+          <div  >
+            Cerrar Sesión
+          </div>
+        ) : (
+          <Link href="/logup" variant="body2">
+            Registrar Usuario
+          </Link>
+        )}
+
+      </MenuItem>
+    </Menu>
+  );
+  const renderLogin = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem >
+
+        <Link href="/login" variant="body2">
+          Iniciar Sesión
+        </Link>
+
+      </MenuItem>
+
+    </Menu>
+  );
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
@@ -188,7 +265,7 @@ export default function PrimarySearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
+            ALICAN
           </Typography>
           <div className={classes.search}>
 
@@ -207,12 +284,13 @@ export default function PrimarySearchAppBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
+              <Badge badgeContent={state.favorites} color="secondary">
+                <FavoriteIcon />
               </Badge>
+              {renderLogin}
             </IconButton>
             <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
+              <Badge badgeContent={state.anotifications} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -242,6 +320,7 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      
     </div>
   );
 }

@@ -5,7 +5,9 @@ import API from './Environment/config';
 
 //import Cookies from 'js-cookie'
 const ENDPOINTS = {
-  logup: "usuario/usuario/",
+  logup: "/usuario/usuario/",
+  login: "/",
+  activate: "/usuario/activate/",
 
 }
 /*
@@ -42,8 +44,46 @@ const UserApi = {
         )
     }
   ),
+  Login: (name, password) => new Promise(
+    (resolve, reject) => {
+      API.post(ENDPOINTS.login+'?username='+name+'&password='+password,
+        JSON.stringify({
+          'username': name,
+          'password': password,
 
+        })
+      )
+        .then(
+          res => res
+        )
+        .then(
+          data => resolve(data)
+        )
+        .catch(
+          err => reject(err),
 
+        )
+    }
+  ),
+  Activate: (coderegister) => new Promise(
+    (resolve, reject) => {
+      API.put(ENDPOINTS.activate,
+        JSON.stringify({
+          'coderegister': coderegister,
+        })
+      )
+        .then(
+          res => res
+        )
+        .then(
+          data => resolve(data)
+        )
+        .catch(
+          err => reject(err),
+
+        )
+    }
+  ),
 }
 
 export default UserApi;
