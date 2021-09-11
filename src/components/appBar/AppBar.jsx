@@ -16,6 +16,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Link from '@material-ui/core/Link';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import ProductApi from '../../api/ProductApi';
+import { AppContext } from '../../context/AppContext';
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -89,13 +91,30 @@ export default function PrimarySearchAppBar() {
   const [state, setState] = React.useState({
     favorites: 0,
     anotifications: 0,
+    searchinput: "",
 
   });
+  const { setProducts } = React.useContext(AppContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const handleChange = (event) => {
+    var code = event.keyCode;
+
+    setState({ ...state, [event.target.name]: event.target.value });
+
+  };
+  const handleKeyPress = (event) => {
+    var code = event.keyCode || event.which;
+    console.log(code);
+    if (code === 13) {
+      searchProduct()
+    } else {
+      setState({ ...state, [event.target.name]: event.target.value });
+    }
+  };
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -117,6 +136,54 @@ export default function PrimarySearchAppBar() {
   /*const LogOut = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };*/
+  const searchProduct = () => {
+    ProductApi.search(state.searchinput).then(res => {
+      console.log(res)
+      let productsApi = res.data;
+      let products = [];
+      let product = [];
+      let indexR = 0;
+      let detalle = "";
+      let descripcion = "";
+      productsApi.forEach((productApidx, index) => {
+        console.log(productApidx);
+        indexR = index + 1;
+        detalle = "";
+/*
+        productApi['detalle']=productApi['descripcion'];
+        productApi['descripcion']=productApi['descripcion'].replace("['", "");
+        productApi['descripcion']=productApi['descripcion'].replace("']", "");
+*/
+        for (let i = 0; i < 130; i++) {
+          //if (productApidx.descripcion[i] != "-" && productApidx.descripcion[i] != "=") {
+            if(productApidx.descripcion[i]&&productApidx.descripcion[i]!==null && productApidx.descripcion[i]!==undefined){
+              detalle = detalle + productApidx.descripcion[i];
+            }
+            
+          //}
+
+
+        }
+        productApidx['detalle'] = detalle;
+        product.push(productApidx);
+        if (indexR % 5 === 0 || productsApi.length === indexR) {
+          products.push(product);
+          product = [];
+        }
+
+      });
+
+      console.log(productsApi.length)
+      console.log(products)
+      setProducts(products);
+
+    }).catch(err => {
+      console.log(err)
+
+    })
+
+  };
+
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -275,10 +342,14 @@ export default function PrimarySearchAppBar() {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              value={state.searchinput}
+              name="searchinput"
+              onChange={handleChange}
+              onKeyPress={handleKeyPress}
               inputProps={{ 'aria-label': 'search' }}
             />
             <div className={classes.searchIcon}>
-              <SearchIcon ></SearchIcon>
+              <SearchIcon onClick={searchProduct}></SearchIcon>
             </div>
           </div>
           <div className={classes.grow} />
@@ -320,7 +391,7 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-      
+
     </div>
   );
 }

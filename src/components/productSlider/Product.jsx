@@ -1,10 +1,13 @@
 import React from 'react';
-import { Grid, makeStyles, Box, Button, withWidth, Link } from "@material-ui/core";
+import { Grid, makeStyles, Box, Button, withWidth } from "@material-ui/core";
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
-
+import {Link} from 'react-router-dom'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import ProductDetail from '../modal/productDetail/Product';
+import {AppContext} from '../../context/AppContext';
+
 //import Link from '@material-ui/core/Link';
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -61,9 +64,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    alignContent: 'center',
-    height: '18%',
-    maxHeight: '18%',
+    alignContent: 'flex-end',
+    height: '30%',
+    maxHeight: '30%',
     fontSize: '0.8em',
     lineHeight:'1em',
   },
@@ -71,6 +74,28 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Product(props) {
   const classes = useStyles();
+  const [state, setState] = React.useState({
+    product: [],
+
+  });
+  const { setProduct} = React.useContext(AppContext);
+ 
+  React.useEffect(() => {
+    console.log(state.product)
+    console.log(props)
+    setState({...state, product:props});
+    console.log(state)
+  }, []);
+
+  const onLinkClick = (e) => {
+    e.preventDefault();
+    setProduct(props);
+    localStorage.setItem('product', JSON.stringify(props))
+    
+    window.location.href=`/product/${props.id}`
+    //    history.push('/product');
+  };
+
 
   return (
 
@@ -91,14 +116,21 @@ export default function Product(props) {
           {props.name}
         </Grid>
         <Grid item xs={12} sm={12} md={12} className={classes.description}>
-          {props.description}
+          {props.detalle}
         </Grid>
-        <Grid item xs={12} sm={12} md={12} className={classes.description}>
+        <Grid item xs={12} sm={12} md={12} className={classes.name}>
+          {/*<ProductDetail product={state.product}></ProductDetail>
+          <Link to="/product" onClick={alert()}>
+              </Link>
+              <button onclick={() =>{ 
+            window.location.href='/product'}}>
+              Continue</button>
+          */}
+          
+              <a href='/product' onClick={onLinkClick}> Ver Detalle </a>
+              
 
-          <Button href="/login" background="primary">
-            Ver Detalle
-          </Button>
-
+          
         </Grid>
       </Grid>
     </Grid>

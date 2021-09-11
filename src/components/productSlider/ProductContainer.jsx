@@ -42,7 +42,7 @@ export default function ProductContainer(props) {
                     <Grid className={classes.product} item xs={3} sm={12} md={3} >
                    
                         
-                        <Product key={index} image={product.imagen} price={product.precio} name={product.titulo} description={product.detalle}>
+                        <Product key={index} id={product.id} image={product.imagen} price={product.precio} name={product.titulo} description={product.descripcion} detalle={product.detalle}>
                         </Product>
                    
     
